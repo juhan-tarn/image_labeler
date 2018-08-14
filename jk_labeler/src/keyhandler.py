@@ -145,7 +145,7 @@ class KeyHandler(Interface):
             if len(data) != 0:
                 with open('%s/%s' % (self.root_dir, file_name), 'w+') as f:
                     f.writelines(data)
-                LOGGER.info('%s 已存檔於 %s' % (file_name, self.root_dir))
+                LOGGER.info('%s saved at %s' % (file_name, self.root_dir))
 
     # move to previous frame
     def on_left(self, event=None, step=1):
@@ -201,9 +201,9 @@ class KeyHandler(Interface):
                 self.video_path = self.video_dirs[current-1]
                 self.init_all()
             else:
-                self.msg('已經是第一支影像了哦!')
+                self.msg('already the first one!')
         else:
-            self.msg('只有一支影像哦!')
+            self.msg('there is only one image!')
 
     # move to next video
     def on_next(self, event=None):
@@ -214,9 +214,9 @@ class KeyHandler(Interface):
                 self.video_path = self.video_dirs[current+1]
                 self.init_all()
             else:
-                self.msg('已經是最後一支影像了哦!')
+                self.msg('last one already!!')
         else:
-            self.msg('只有一支影像哦!')
+            self.msg('there is only one!')
 
     # move to previous done frame
     def on_prev_done(self, event=None):
@@ -247,7 +247,7 @@ class KeyHandler(Interface):
         n = len(self.results.keys())
         if n == N and not self.is_checked:
             self.is_checked = True
-            if askokcancel('往下一個影像', '該影像已經標註 %s 了!\n要直接去下一個影像嗎?' % N):
+            if askokcancel('to next image', 'this image is labeled %s  \n to the next one?' % N):
                 self.on_next()
 
     def tvitem_click(self, event, item=None):

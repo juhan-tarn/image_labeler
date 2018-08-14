@@ -180,19 +180,19 @@ class Labeler(tk.Frame, Utils, KeyHandler):
         self.parent.config(menu=menu)
 
         menu_file = tk.Menu(menu)
-        menu_file.add_command(label='載入影像檔案路徑', command=lambda type_='dir': self.on_load(type=type_))
-        menu_file.add_command(label='載入影像檔案', command=lambda type_='file': self.on_load(type=type_))
-        menu_file.add_command(label='儲存', command=self.on_save)
+        menu_file.add_command(label='load image file path', command=lambda type_='dir': self.on_load(type=type_))
+        menu_file.add_command(label='load image file', command=lambda type_='file': self.on_load(type=type_))
+        menu_file.add_command(label='save', command=self.on_save)
 
         menu_help = tk.Menu(menu)
-        menu_help.add_command(label='設定', command=self.on_settings)
+        menu_help.add_command(label='settings', command=self.on_settings)
 
         menu.add_cascade(label='File', menu=menu_file)
         menu.add_cascade(label='Help', menu=menu_help)
 
     def create_button(self):
 
-        button_label_frame = ttk.LabelFrame(self.op_frame, text='選擇類別')
+        button_label_frame = ttk.LabelFrame(self.op_frame, text='select a category')
         button_label_frame.grid(row=0, column=0, sticky='news')
         button_label_frame.grid_rowconfigure(0, weight=1)
         button_label_frame.grid_columnconfigure(0, weight=1)
@@ -240,9 +240,9 @@ class Labeler(tk.Frame, Utils, KeyHandler):
         self.bbox_tv.column('#0', anchor='w', width=0)
         self.bbox_tv.heading('c', text='class')
         self.bbox_tv.column('c', anchor='center', width=90)
-        self.bbox_tv.heading('tl', text='左上坐標')
+        self.bbox_tv.heading('tl', text='upper left coordinate')
         self.bbox_tv.column('tl', anchor='center', width=120)
-        self.bbox_tv.heading('br', text='右下坐標')
+        self.bbox_tv.heading('br', text='buttom right coordinate')
         self.bbox_tv.column('br', anchor='center', width=120)
         self.bbox_tv.grid(row=1, column=0, sticky='news', padx=5)
 
@@ -257,16 +257,16 @@ class Labeler(tk.Frame, Utils, KeyHandler):
         self.label_xy.grid(row=2, column=0, sticky='w', padx=5)
 
     def create_done_bbox_tv(self):
-        bboxlist_label_frame = ttk.LabelFrame(self.info_frame, text='檢視已標註的 BBoxes')
+        bboxlist_label_frame = ttk.LabelFrame(self.info_frame, text='view marked BBoxes')
         bboxlist_label_frame.grid(row=1, column=0, sticky='news', padx=5)
 
         self.done_bbox_tv = ttk.Treeview(bboxlist_label_frame, height=10)
         self.done_bbox_tv['columns'] = ('f_ind', 'n')
         self.done_bbox_tv.heading('#0', text='', anchor='center')
         self.done_bbox_tv.column('#0', anchor='w', width=0)
-        self.done_bbox_tv.heading('f_ind', text='幀數')
+        self.done_bbox_tv.heading('f_ind', text='frame number')
         self.done_bbox_tv.column('f_ind', anchor='center', width=90)
-        self.done_bbox_tv.heading('n', text='BBoxes 數量')
+        self.done_bbox_tv.heading('n', text='BBoxes number')
         self.done_bbox_tv.column('n', anchor='center', width=120)
         self.done_bbox_tv.grid(row=0, column=0, sticky='news', padx=5)
 
@@ -275,7 +275,7 @@ class Labeler(tk.Frame, Utils, KeyHandler):
 
         self.done_bbox_tv.configure(yscrollcommand=vsb.set)
 
-        label = ttk.Label(bboxlist_label_frame, text='各類別已標註數量:', font=("", 10, "bold"))
+        label = ttk.Label(bboxlist_label_frame, text='number of labels in each category:', font=("", 10, "bold"))
         label.grid(row=1, column=0, columnspan=2, sticky='w', padx=5, pady=10)
         self.label_done_obj = ttk.Label(bboxlist_label_frame, text="1: --\n2:-- \n3: --\n4: --\n5: --")
         self.label_done_obj.grid(row=2, column=0, columnspan=2, sticky='w', padx=5)
@@ -287,19 +287,19 @@ class Labeler(tk.Frame, Utils, KeyHandler):
         text_done_n_video = '--/--'
         text_done_n_frame = '--/--'
 
-        info_label_frame = ttk.LabelFrame(self.info_frame, text='影像信息')
+        info_label_frame = ttk.LabelFrame(self.info_frame, text='image info')
         info_label_frame.grid(row=2, column=0, sticky='news', padx=5)
 
-        self.label_video_name = ttk.Label(info_label_frame, text='影像檔名: %s' % text_video_name)
+        self.label_video_name = ttk.Label(info_label_frame, text='image file name: %s' % text_video_name)
         self.label_video_name.grid(row=0, column=0, sticky=tk.W, padx=5)
-        self.label_time = ttk.Label(info_label_frame, text='影像時間: %s' % text_time)
+        self.label_time = ttk.Label(info_label_frame, text='text time: %s' % text_time)
         self.label_time.grid(row=1, column=0, sticky=tk.W, padx=5)
-        self.label_n_video = ttk.Label(info_label_frame, text='影像 index: %s' % text_n_video)
+        self.label_n_video = ttk.Label(info_label_frame, text='image index: %s' % text_n_video)
         self.label_n_video.grid(row=2, column=0, sticky=tk.W, padx=5)
 
         # self.label_done_n_video = ttk.Label(info_label_frame, text='已完成標註影像數: %s' % text_done_n_video)
         # self.label_done_n_video.grid(row=3, column=0, sticky=tk.W, padx=5)
-        self.label_done_n_frame = ttk.Label(info_label_frame, text='已完成標註幀數: %s' % text_done_n_frame)
+        self.label_done_n_frame = ttk.Label(info_label_frame, text='number of completed labeled frames: %s' % text_done_n_frame)
         self.label_done_n_frame.grid(row=4, column=0, sticky=tk.W, padx=5)
 
         # video operation frame
@@ -400,12 +400,12 @@ class Labeler(tk.Frame, Utils, KeyHandler):
             text_time = "%d:%02d:%02d" % (h, m, s)
 
             self.label_done_obj.configure(text="1: %s\n2: %s\n3: %s\n4: %s\n5: %s" % tuple(v))
-            self.label_video_name.configure(text='影像檔名: %s' % text_video_name)
-            self.label_time.configure(text='影像時間: %s' % text_time)
+            self.label_video_name.configure(text='image file name: %s' % text_video_name)
+            self.label_time.configure(text='text time: %s' % text_time)
             self.scale_n_frame.set(self.n_frame)
             self.label_n_frame.configure(text='%s/%s' % (self.n_frame, self.total_frame))
-            self.label_n_video.configure(text='影像 index: %s' % text_n_video)
-            self.label_done_n_frame.configure(text='已完成標註幀數: %s' % text_done_n_frame)
+            self.label_n_video.configure(text='image index: %s' % text_n_video)
+            self.label_done_n_frame.configure(text='number of completed labeled frames: %s' % text_done_n_frame)
 
         self.parent.after(100, self.update_info)
 
