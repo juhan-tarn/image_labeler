@@ -9,6 +9,8 @@ from tkinter.filedialog import askdirectory, askopenfilename
 from tkinter.messagebox import askokcancel, showerror, showinfo, showwarning
 import cv2
 
+default_path = os.path.abspath('.')
+
 def test():
 	print("you did it!!!")
 
