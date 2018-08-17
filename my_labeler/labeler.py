@@ -124,23 +124,22 @@ def create_ui():
 
 
 
-
-
-
 #create a window
 window = tk.Tk()
 window.title('image labeler')
-window.geometry('1380x920')
+window.geometry('1880x920') #set a size for the window
 
-#l = tk.Label(window, text='')
-#l.pack()
+tk.Grid.rowconfigure(window, 0 , weight=1)
+tk.Grid.columnconfigure(window, 0 , weight=1)
+tk.Grid.rowconfigure(window, 1 , weight=1)
+tk.Grid.columnconfigure(window, 1 , weight=1)
 
 #creating menubar
 menubar = tk.Menu(window)
 filemenu = tk.Menu(menubar, tearoff=0)
 
-menubar = Menu(window)
-filemenu = Menu(menubar, tearoff = 0)
+menubar = tk.Menu(window)
+filemenu = tk.Menu(menubar, tearoff = 0)
 menubar.add_cascade(label = "File", menu = filemenu) #add 
 filemenu.add_command(label = "load image file path", command = lambda type_ = 'dir': load_file(type = type_))
 filemenu.add_command(label = "load image file", command = lambda type_ = 'file': load_file(type = type_))
@@ -154,7 +153,7 @@ window.grid_columnconfigure(1, weight=1)
 __frame__ = np.zeros((720, 1280, 3), dtype='uint8')
 cv2.putText(__frame__, 'Load Video', (300, 360), 7, 5, (255, 255, 255), 2)
 __orig_frame__ = __frame__.copy()
-__image = ImageTk.PhotoImage(Image.fromarray(__frame__))
+image = ImageTk.PhotoImage(Image.fromarray(__frame__))
 
 # display panel frame
 #FIX HERE
@@ -164,17 +163,56 @@ display_frame.grid_rowconfigure(0, weight=1)
 display_frame.grid_columnconfigure(0, weight=1)
 display_frame.grid_rowconfigure(1, weight=1)
 
+disply_l = ttk.Label(display_frame, image=image)
+disply_l.grid(row=0, column=0, sticky='news')
 
-#topFrame = Frame(window)
-#topFrame.pack(expand = True)
-bottomFrame = Frame(window)
-bottomFrame.grid(row=0, column=0) #FIX HERE TOO
-#adding buttons
-play_button = Button(bottomFrame, text = "Play", font = 30, fg = "blue", command = play).grid(row=0, column=1, sticky='news', padx=10, pady=0)
-pause_button = Button(bottomFrame, text = "Pause", font = 30, fg = "red", command = pause).grid(row=0, column=2, sticky='news', padx=10, pady=0)
-replay_button = Button(bottomFrame, text = "Replay", font = 30,fg = "green", command = replay).grid(row=0, column=3, sticky='news', padx=10, pady=0)
-prev_button = Button(bottomFrame, text = "<<", font = 30,fg = "black", command = prev_one).grid(row=0, column=4, sticky='news', padx=10, pady=0)
-next_button = Button(bottomFrame, text = ">>", font = 30,fg = "black", command = next_one).grid(row=0, column=5, sticky='news', padx=10, pady=0)
+
+op_frame = tk.Frame(display_frame)
+op_frame.grid(row=1, column=0, sticky='news', padx=10, pady=10)
+op_frame.grid_rowconfigure(0, weight=1)
+op_frame.grid_rowconfigure(1, weight=1)
+op_frame.grid_columnconfigure(0, weight=1)
+
+
+button_label_frame = Frame(op_frame)
+button_label_frame.grid(row=0, column=0, sticky='news')
+button_label_frame.grid_rowconfigure(0, weight=1)
+button_label_frame.grid_columnconfigure(0, weight=1)
+
+button_frame = Frame(button_label_frame)
+button_frame.grid(row=0, column=0)
+#font = ("Courier", 30),
+play_button = Button(button_frame, text = "Play", command = play).grid(row=0, column=1, sticky='news', padx=10, pady=0)
+pause_button = Button(button_frame, text = "Pause", command = pause).grid(row=0, column=2, sticky='news', padx=10, pady=0)
+replay_button = ttk.Button(button_frame, text = "Replay",command = replay).grid(row=0, column=3, sticky='news', padx=10, pady=0)
+prev_button = ttk.Button(button_frame, text = "<<", command = prev_one).grid(row=0, column=4, sticky='news', padx=10, pady=0)
+next_button = ttk.Button(button_frame, text = ">>", command = next_one).grid(row=0, column=5, sticky='news', padx=10, pady=0)
+
+info_frame = tk.Frame(window, bg = "yellow")
+info_frame.grid(row=0, column=1, rowspan=2, sticky='news', pady=10)
+info_frame.grid_columnconfigure(2, weight=1)
+#info_frame.grid_rowconfigure(0, weight=1)
+#info_frame.grid_rowconfigure(1, weight=1)
+info_frame.grid_rowconfigure(2, weight=1)
+
+
 
 window.config(menu=menubar)
 window.mainloop()
+
+
+###############
+#topFrame = Frame(window)
+#topFrame.pack(expand = True)
+# bottomFrame = Frame(window)
+# bottomFrame.grid(row=0, column=0) #FIX HERE TOO
+
+# # #adding buttons
+# play_button = Button(bottomFrame, text = "Play", font = 30, fg = "blue", command = play).grid(row=0, column=1, sticky='news', padx=10, pady=0)
+# pause_button = Button(bottomFrame, text = "Pause", font = 30, fg = "red", command = pause).grid(row=0, column=2, sticky='news', padx=10, pady=0)
+# replay_button = Button(bottomFrame, text = "Replay", font = 30,fg = "green", command = replay).grid(row=0, column=3, sticky='news', padx=10, pady=0)
+# prev_button = Button(bottomFrame, text = "<<", font = 30,fg = "black", command = prev_one).grid(row=0, column=4, sticky='news', padx=10, pady=0)
+# next_button = Button(bottomFrame, text = ">>", font = 30,fg = "black", command = next_one).grid(row=0, column=5, sticky='news', padx=10, pady=0)
+
+# window.config(menu=menubar)
+# window.mainloop()
